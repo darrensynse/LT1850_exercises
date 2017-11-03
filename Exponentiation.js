@@ -1,4 +1,4 @@
-// ExponentiationJS.js
+// Exponentiation.js
 // https://math.stackexchange.com/questions/798550/what-is-the-name-of-the-answer-to-exponentiation
 module.exports = function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');

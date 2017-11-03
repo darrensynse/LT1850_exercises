@@ -1,4 +1,4 @@
-// ArithmeticJS.js
+// Arithmetic_v1.js
 module.exports = function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
 
@@ -25,12 +25,6 @@ module.exports = function (context, req) {
             context.res = {
                 // status: 200, /* Defaults to 200 */
                 body: "The sum of " + num1 + " and " + num2 + " is " + sum
-            };
-        } else if (operation == 'subtract') {
-            difference = num1 - num2;
-            context.res = {
-                // status: 200, /* Defaults to 200 */
-                body: "The difference between " + num1 + " and " + num2 + " is " + difference
             };
         };
     }

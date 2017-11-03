@@ -1,8 +1,8 @@
-// Arithmetic_v2.js
+// Arithmetic_v3.js
 module.exports = function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
 
-    serviceCall = function (n1, n2) {
+    serviceCall = function (op, n1, n2) {
         var http = require('http');
 
         data = {
@@ -12,11 +12,21 @@ module.exports = function (context, req) {
         
         var post_req  = null,
             post_data = JSON.stringify(data);
+            
+        if (op == 'multiply') {
+            function_path = '/api/Multiplication'
+        } else if (op == 'divide') {
+            function_path = '/api/Division'
+        } else if (op == 'add') {
+            function_path = '/api/Addition'
+        } else if (op == 'subtract') {
+            function_path = '/api/Subtraction'
+        };
 
         var post_options = {
             // SUBSTITUTE CORRECT URL BELOW
             hostname: 'ltexample01.azurewebsites.net',
-            path    : '/api/Subtraction',
+            path    : function_path,
             method  : 'POST',
             headers : {
                 'Content-Type': 'application/json',
@@ -64,13 +74,12 @@ module.exports = function (context, req) {
                 body: "The quotient of " + num1 + " and " + num2 + " is " + quotient
             };
         } else if (operation == 'add') {
-            sum = num1 + num2;
+            response = serviceCall(operation, num1, num2);
             context.res = {
-                // status: 200, /* Defaults to 200 */
-                body: "The sum of " + num1 + " and " + num2 + " is " + sum
+                body: response
             };
         } else if (operation == 'subtract') {
-            response = serviceCall(num1, num2);
+            response = serviceCall(op, num1, num2);
             context.res = {
                 body: response
             };
