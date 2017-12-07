@@ -62,16 +62,14 @@ module.exports = function (context, req) {
         operation = req.body.operation;
         
         if (operation == 'multiply') {
-            product = num1 * num2;
+            response = serviceCall(operation, num1, num2);
             context.res = {
-                // status: 200, /* Defaults to 200 */
-                body: "The product of " + num1 + " and " + num2 + " is " + product
+                body: response
             };
         } else if (operation == 'divide') {
-            quotient = num1 / num2;
+            response = serviceCall(operation, num1, num2);
             context.res = {
-                // status: 200, /* Defaults to 200 */
-                body: "The quotient of " + num1 + " and " + num2 + " is " + quotient
+                body: response
             };
         } else if (operation == 'add') {
             response = serviceCall(operation, num1, num2);
@@ -79,7 +77,7 @@ module.exports = function (context, req) {
                 body: response
             };
         } else if (operation == 'subtract') {
-            response = serviceCall(op, num1, num2);
+            response = serviceCall(operation, num1, num2);
             context.res = {
                 body: response
             };
