@@ -22,7 +22,7 @@ module.exports = function (context, req) {
     context.done();
 };
 
-// SAMPLE REQUEST BODY
+//SAMPLE REQUEST BODY
 // {
 //     "num1": 1,
 //     "num2": 22
