@@ -7,7 +7,9 @@ def main(request):
     headers = {
         'Access-Control-Allow-Origin': '*'
     }
+    
     request_json = request.get_json()
+
     if 'num1' in request_json: 
         num1 = request_json['num1']
     else:
