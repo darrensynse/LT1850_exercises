@@ -14,12 +14,6 @@ module.exports = function (context, req) {
             post_data = JSON.stringify(data);
         
         var hostname = 'localhost';
-        var port = 7071; 
-
-        if (cloud_env == 'google') {
-            hostname = 'us-central1-praxis-electron-269403.cloudfunctions.net';
-            port = 443;
-        };
 
         if (op == 'multiply') {
             function_path = '/api/Multiplication'
@@ -31,11 +25,8 @@ module.exports = function (context, req) {
             function_path = '/subtraction'
         };
         
-
-
         var post_options = {
             hostname: hostname,
-            port    : port,
             path    : function_path,
             method  : 'POST',
             headers : {
@@ -43,6 +34,12 @@ module.exports = function (context, req) {
                 'Cache-Control': 'no-cache',
                 'Content-Length': post_data.length
             }
+        };
+
+        if (cloud_env == 'google') {
+            post_options.hostname = 'us-central1-praxis-electron-269403.cloudfunctions.net';
+        } else {
+            post_options.port = 7071;
         };
                 
         post_req = http.request(post_options, function (res) {
