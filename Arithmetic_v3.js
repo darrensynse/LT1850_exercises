@@ -2,7 +2,7 @@
 module.exports = function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
 
-    serviceCall = function (op, n1, n2) {
+    serviceCall = function (op, n1, n2, cloud_env) {
         var http = require('http');
 
         data = {
@@ -12,7 +12,15 @@ module.exports = function (context, req) {
         
         var post_req  = null,
             post_data = JSON.stringify(data);
-            
+        
+        var hostname = 'localhost';
+        var port = 7071; 
+
+        if (cloud_env == 'google') {
+            hostname = 'us-central1-praxis-electron-269403.cloudfunctions.net';
+            port = 443;
+        };
+
         if (op == 'multiply') {
             function_path = '/api/Multiplication'
         } else if (op == 'divide') {
@@ -20,12 +28,14 @@ module.exports = function (context, req) {
         } else if (op == 'add') {
             function_path = '/api/Addition'
         } else if (op == 'subtract') {
-            function_path = '/api/Subtraction'
+            function_path = '/subtraction'
         };
+        
+
 
         var post_options = {
-            // SUBSTITUTE CORRECT URL BELOW
-            hostname: 'ltexample01.azurewebsites.net',
+            hostname: hostname,
+            port    : port,
             path    : function_path,
             method  : 'POST',
             headers : {
@@ -62,22 +72,22 @@ module.exports = function (context, req) {
         operation = req.body.operation;
         
         if (operation == 'multiply') {
-            response = serviceCall(operation, num1, num2);
+            response = serviceCall(operation, num1, num2, 'local');
             context.res = {
                 body: response
             };
         } else if (operation == 'divide') {
-            response = serviceCall(operation, num1, num2);
+            response = serviceCall(operation, num1, num2, 'local');
             context.res = {
                 body: response
             };
         } else if (operation == 'add') {
-            response = serviceCall(operation, num1, num2);
+            response = serviceCall(operation, num1, num2, 'local');
             context.res = {
                 body: response
             };
         } else if (operation == 'subtract') {
-            response = serviceCall(operation, num1, num2);
+            response = serviceCall(operation, num1, num2, 'google');
             context.res = {
                 body: response
             };

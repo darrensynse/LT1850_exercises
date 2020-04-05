@@ -14,8 +14,8 @@ module.exports = function (context, req) {
             post_data = JSON.stringify(data);
 
         var post_options = {
-            // SUBSTITUTE CORRECT URL BELOW
-            hostname: 'ltexample01.azurewebsites.net',
+            hostname: 'localhost',
+            port    : '7071',
             path    : '/api/Subtraction',
             method  : 'POST',
             headers : {
