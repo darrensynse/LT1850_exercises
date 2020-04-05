@@ -11,9 +11,8 @@ module.exports = function (context, req) {
         }
         
         var post_req  = null,
-            post_data = JSON.stringify(data);
-        
-        var hostname = 'localhost';
+            post_data = JSON.stringify(data),
+            post_options = null;
 
         if (op == 'multiply') {
             function_path = '/api/Multiplication'
@@ -25,8 +24,20 @@ module.exports = function (context, req) {
             function_path = '/subtraction'
         };
         
-        var post_options = {
-            hostname: hostname,
+        var local_post_options = {
+            hostname: 'localhost',
+            port    : 7071,
+            path    : function_path,
+            method  : 'POST',
+            headers : {
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-cache',
+                'Content-Length': post_data.length
+            }
+        };
+
+        var google_post_options = {
+            hostname: 'us-central1-praxis-electron-269403.cloudfunctions.net',
             path    : function_path,
             method  : 'POST',
             headers : {
@@ -37,9 +48,9 @@ module.exports = function (context, req) {
         };
 
         if (cloud_env == 'google') {
-            post_options.hostname = 'us-central1-praxis-electron-269403.cloudfunctions.net';
+            post_options = google_post_options;
         } else {
-            post_options.port = 7071;
+            post_options = local_post_options;
         };
                 
         post_req = http.request(post_options, function (res) {
